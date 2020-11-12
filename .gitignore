@@ -4,3 +4,4 @@ target/
 */*.iml
 *.iml
 */cookies.yaml
+*/allure-results/
