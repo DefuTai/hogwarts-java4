@@ -1,9 +1,6 @@
 package com.hogwarts;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * 描述：
@@ -16,12 +13,12 @@ public class JUnit4Test {
 
     @BeforeClass
     public static void beforeClass(){
-        System.out.println("测试类的第一个方法执行前执行");
+        System.out.println("BeforeClass => 使用了该注解的方法应该在当前类中所有使用了@Test注解方法前执行");
     }
 
     @Before
     public void before(){
-        System.out.println("测试类的每个测试方法执行前执行");
+        System.out.println("Before => 使用了该注解的方法应该在当前类中每个使用了@Test注解的方法前执行");
     }
 
     @Test
@@ -42,6 +39,16 @@ public class JUnit4Test {
     @Test
     public void test_junit4_except() {
         Assert.assertEquals("JUnit4 ==> 求商计算有误！", 1, Calculator.except(1, 1));
+    }
+
+    @After
+    public void after(){
+        System.out.println("After => 使用了该注解的方法应该在当前类中每个使用了@Test注解的方法后执行");
+    }
+
+    @AfterClass
+    public static void afterClass(){
+        System.out.println("AfterClass => 使用了该注解的方法应该在当前类中所有使用了@Test注解的方法后执行");
     }
 
 }

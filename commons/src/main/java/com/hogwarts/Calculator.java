@@ -11,6 +11,19 @@ public class Calculator {
 
     public static int sum = 0;
 
+    public static int count(int x) {
+        int i = sum;
+        sum = i + x;
+        return sum;
+    }
+
+    public synchronized static int synCount(int x) throws InterruptedException {
+        int i = sum;
+        Thread.sleep(1000);
+        sum = i + x;
+        return sum;
+    }
+
     /**
      * 累加求和
      *

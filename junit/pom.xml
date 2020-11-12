@@ -16,7 +16,6 @@
             <groupId>com.hogwarts</groupId>
             <artifactId>commons</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>test</scope>
         </dependency>
 
         <!--        <dependency>-->

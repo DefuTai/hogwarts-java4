@@ -5,3 +5,4 @@ target/
 *.iml
 */cookies.yaml
 */allure-results/
+.DS_Store
