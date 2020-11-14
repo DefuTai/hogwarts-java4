@@ -35,6 +35,16 @@ public class Calculator {
     }
 
     /**
+     * 累加求和（添加同步线程锁）
+     *
+     * @param num
+     * @return
+     */
+    public static synchronized int synSum(int num) {
+        return sum += num;
+    }
+
+    /**
      * 加法
      *
      * @param x
