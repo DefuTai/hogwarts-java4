@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * 描述：实现网页版企业微信登录
  *
@@ -26,25 +28,49 @@ import java.util.concurrent.TimeUnit;
  * @Data 2020-11-11 20:26
  * @Version 1.0
  **/
-public class WebAutoTest {
+public class ContactClassicTest {
 
     static WebDriver driver;
 
-    @BeforeEach
-    void before() {
+    @BeforeAll
+    static void before() throws IOException {
         //本地环境问题，需要手动设置驱动地址
         System.setProperty("webdriver.chrome.driver", "/Users/defu/Tools/web_drivers/chromedriver");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+        File cookieFile = new File("cookies.yaml");
+        if (cookieFile.exists()) {
+            //登录企业微信
+            driver.get("https://work.weixin.qq.com/wework_admin/loginpage_wx");
+            ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+            TypeReference<List<HashMap<String, Object>>> reference = new TypeReference<List<HashMap<String, Object>>>() {
+            };
+            //读取cookies.ymal文件中的cookie信息
+            List<HashMap<String, Object>> cookies = mapper.readValue(cookieFile, reference);
+            cookies.forEach(cookieMap -> {
+                //将cookie信息设置给chrome驱动
+                driver.manage().addCookie(new Cookie(cookieMap.get("name").toString(), cookieMap.get("value").toString()));
+            });
+            //刷新进入企业微信首页
+            driver.navigate().refresh();
+        } else {
+            try {
+                needLogin();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @AfterAll
-    static void afterAll() {
-//        driver.quit();
+    static void afterAll() throws InterruptedException {
+        Thread.sleep(10 * 1000);
+        driver.quit();
     }
 
-    @Test
-    void test_getCookies() throws InterruptedException, IOException {
+    static void needLogin() throws InterruptedException, IOException {
         driver.get("https://work.weixin.qq.com/wework_admin/loginpage_wx?from=myhome");
         //sleep 15
         Thread.sleep(12 * 1000);
@@ -60,20 +86,35 @@ public class WebAutoTest {
     }
 
     @Test
-    void test_addEmployee() throws IOException {
-        driver.get("https://work.weixin.qq.com/wework_admin/loginpage_wx");
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        TypeReference<List<HashMap<String, Object>>> reference = new TypeReference<List<HashMap<String, Object>>>() {
-        };
-        //读取cookies.ymal文件中的cookie信息
-        List<HashMap<String, Object>> cookies = mapper.readValue(new File("cookies.yaml"), reference);
-        cookies.forEach(cookieMap -> {
-            //将cookie信息设置给chrome驱动
-            driver.manage().addCookie(new Cookie(cookieMap.get("name").toString(), cookieMap.get("value").toString()));
-        });
-        //刷新进入企业微信首页
-        driver.navigate().refresh();
+    void addContact() {
+        driver.findElement(By.cssSelector("[node-type=\"addmember\"]")).click();
+//        driver.findElement(By.linkText("添加成员")).click();
+        driver.findElement(By.name("username")).sendKeys("Test01");
+        driver.findElement(By.name("acctid")).sendKeys("Test01");
+        driver.findElement(By.name("mobile")).sendKeys("15988888888");
+        driver.findElement(By.linkText("保存")).click();
+    }
 
+    @Test
+    void addContact2() {
+        click(By.cssSelector("[node-type=\"addmember\"]"));
+        sendKeys(By.name("username"), "Test02");
+        sendKeys(By.name("acctid"), "Test02");
+        sendKeys(By.name("mobile"), "15988888888");
+        click(By.linkText("保存"));
+    }
+
+    @Test
+    void searchDepartment() {
+        click(By.id("menu_contacts"));
+        sendKeys(By.id("memberSearchInput"), "销售部");
+        click(By.cssSelector(".ww_icon_AddMember"));
+        String content = driver.findElement(By.cssSelector(".js_party_info")).getText();
+        assertTrue(content.contains("无任何成员"));
+    }
+
+    @Test
+    void test_addEmployee() {
         //开始进行添加成员操作
         Actions actions = new Actions(driver);
         actions.click(driver.findElement(By.cssSelector("[class=\"index_service_cnt js_service_list\"]>a:nth-child(1)")));
@@ -101,7 +142,15 @@ public class WebAutoTest {
         driver.findElements(By.cssSelector("[class=\"ww_label ww_label_Middle\"]>[name=\"identity_stat\"]")).get(0).click();
         //点击保存
         driver.findElements(By.cssSelector("[class=\"member_colRight_operationBar ww_operationBar\"]>[class=\"qui_btn ww_btn js_btn_save\"]")).get(0).click();
-
     }
+
+    void click(By by) {
+        driver.findElement(by).click();
+    }
+
+    void sendKeys(By by, String content) {
+        driver.findElement(by).sendKeys(content);
+    }
+
 
 }

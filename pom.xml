@@ -13,7 +13,8 @@
         <module>junit</module>
         <module>testng</module>
         <module>commons</module>
-        <module>automation</module>
+        <module>selenium</module>
+        <module>appium</module>
     </modules>
 
     <build>
