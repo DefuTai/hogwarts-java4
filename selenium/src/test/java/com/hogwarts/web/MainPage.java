@@ -28,9 +28,9 @@ public class MainPage extends BasePage {
     }
 
     /**
-     * 企业微信WEB首页点击"菜单-添加成员"
+     * 企业微信WEB首页点击进入"通讯录"页面
      *
-     * @return 跳转添加成员页面
+     * @return 跳转通讯录页面
      */
     ContactPage menuContact() {
         click(By.id("menu_contacts"));

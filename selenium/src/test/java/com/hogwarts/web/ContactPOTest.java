@@ -1,5 +1,6 @@
 package com.hogwarts.web;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -7,7 +8,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * 描述：
+ * 描述：通讯录页面功能测试
  *
  * @Author defu
  * @Data 2020-11-21 01:34
@@ -15,33 +16,36 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  **/
 public class ContactPOTest {
 
-    @Test
-    void memberAdd() throws IOException, InterruptedException {
-        MainPage mainPage = new MainPage();
+    private static MainPage mainPage;
+    private static ContactPage contactPage;
 
-        ContactPage contactPage = mainPage.menuContact();
-        contactPage.searchMemberInput("销售部");
-        String content = contactPage.getPartyInfo();
-
-        assertTrue(content.contains("无任何成员"));
+    @BeforeAll
+    static void beforeAll() throws IOException, InterruptedException {
+        mainPage = new MainPage();
+        //进入通讯录页面
+        contactPage = mainPage.menuContact();
     }
 
-    /**
-     * 搜索部门
-     *
-     * @throws IOException
-     * @throws InterruptedException
-     */
     @Test
-    void departSearchChainTest() throws IOException, InterruptedException {
-        assertTrue(new MainPage().menuContact().searchMemberInput("销售部").getPartyInfo().contains("无任何成员"));
+    void searchDepartTest() {
+        assertTrue(contactPage.searchMemberInput("DF-测试部门01").getPartyInfo().contains("无任何成员"));
     }
 
-    //添加员工
     @Test
-    void addMemberTest() throws IOException, InterruptedException {
-        new MainPage().menuContact().addMember("Test01", "Test01", "15987654321");
-        new ContactPage().searchMember("Test001");
+    void addDepartTest() {
+        String departName = "DF-测试部门01";
+        assertTrue(contactPage.addDepart(departName).searchMemberInput(departName).getPartyInfo().contains(departName));
+    }
+
+    @Test
+    void modifyDepartTest() {
+        String newDepartName = "DF-测试部门01 NEW";
+        assertTrue(contactPage.searchMemberInput("DF-测试部门01").modifyDepart(newDepartName).deleteMemberInput().searchMemberInput(newDepartName).getPartyInfo().contains(newDepartName));
+    }
+
+    @Test
+    void addMemberInDepart() {
+        assertTrue(contactPage.searchMemberInput("DF-测试部门01").addMember("测试员工002", "TestMember002", "15987654322").deleteMemberInput().searchMemberInput("测试员工002").getPartyInfo().contains("测试员工001"));
     }
 
 }

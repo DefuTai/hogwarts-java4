@@ -12,12 +12,13 @@ import org.openqa.selenium.WebDriver;
  **/
 public class ContactPage extends BasePage {
 
+    private By partyInfo = By.cssSelector(".js_party_info");
+
     ContactPage(WebDriver driver) {
         super(driver);
     }
 
     public ContactPage() {
-
     }
 
     /**
@@ -29,20 +30,54 @@ public class ContactPage extends BasePage {
      * @return
      */
     ContactPage addMember(String userName, String acctId, String mobile) {
-        driver.findElement(By.name("username")).sendKeys(userName);
-        driver.findElement(By.name("acctid")).sendKeys(acctId);
-        driver.findElement(By.name("mobile")).sendKeys(mobile);
-        driver.findElement(By.linkText("保存")).click();
+        click(By.linkText("添加成员"));
+        sendKeys(By.name("username"), userName);
+        sendKeys(By.name("acctid"), acctId);
+        sendKeys(By.name("mobile"), mobile);
+        click(By.linkText("保存"));
         return this;
     }
 
     /**
      * 添加部门
+     * <p>
+     * 操作步骤：
+     * 1. 点击左上方搜索框右边的添加按钮
+     * 2. 点击添加部门
+     * 3. 输入部门名称
+     * 4. 点击下拉框
+     * 5. 点击所属部门
+     * 6. 点击确认按钮
      *
      * @param departName 部门名称
      * @return
      */
     ContactPage addDepart(String departName) {
+        click(By.linkText("添加"));
+        click(By.linkText("添加部门"));
+
+        sendKeys(By.name("name"), departName);
+        click(By.linkText("选择所属部门"));
+        driver.findElements(By.linkText("DF测试工厂")).get(1).click();
+
+        click(By.linkText("确定"));
+        return this;
+    }
+
+    /**
+     * 修改部门信息
+     * 1. 点击修改名称
+     * 2. 输入新的部门名称
+     * 3. 点击保存
+     *
+     * @param newDepartName
+     * @return
+     */
+    ContactPage modifyDepart(String newDepartName) {
+        click(By.linkText("修改名称"));
+        sendKeys(By.name("name"), newDepartName);
+        click(By.linkText("保存"));
+
         return this;
     }
 
@@ -54,7 +89,17 @@ public class ContactPage extends BasePage {
      */
     ContactPage searchMemberInput(String departName) {
         sendKeys(By.id("memberSearchInput"), departName);
-        click(By.cssSelector(".ww_icon_AddMember"));
+        click(By.linkText(departName));
+        return this;
+    }
+
+    /**
+     * 删除搜索输入框中的关键字
+     *
+     * @return
+     */
+    ContactPage deleteMemberInput() {
+        click(By.id("clearMemberSearchInput"));
         return this;
     }
 
@@ -64,7 +109,7 @@ public class ContactPage extends BasePage {
      * @return
      */
     String getPartyInfo() {
-        String content = getText(By.cssSelector(".js_party_info"));
+        String content = getText(partyInfo);
         return content;
     }
 
