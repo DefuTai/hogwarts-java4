@@ -1,0 +1,13 @@
+#TODO 实现操作、参数双驱动
+
+#操作参数化
+steps:
+  - init: [ mainPage, main_po.yaml ]
+  - mainPage.search: {}
+#  - searchPage: {}
+#  - searchPage.search: ${data}
+
+#数据参数化
+data:
+  - 霍格沃兹三期
+  - 霍格沃兹四期

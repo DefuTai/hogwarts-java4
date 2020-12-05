@@ -1,0 +1,14 @@
+data:
+  - 霍格沃兹三期
+  - 霍格沃兹四期
+
+steps:
+  - chrome: {}
+  - implicitly_wait: 5
+  - get: https://ceshire.com
+  - find: {id:search-button}
+  - click: {}
+  - find: {id:search-term}
+  - send_keys: ${data}
+  - sleep: 2
+  - quit: {}

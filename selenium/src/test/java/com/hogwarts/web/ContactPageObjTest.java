@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @Data 2020-11-21 01:34
  * @Version 1.0
  **/
-public class ContactPOTest {
+public class ContactPageObjTest {
 
     private static MainPage mainPage;
     private static ContactPage contactPage;

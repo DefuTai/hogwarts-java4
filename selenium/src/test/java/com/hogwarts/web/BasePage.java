@@ -18,6 +18,8 @@ public class BasePage {
     }
 
     protected BasePage(WebDriver driver) {
+        //TODO 本地环境原因，必须手动设置
+        System.setProperty("webdriver.chrome.driver", "/Users/defu/Tools/web_drivers/chromedriver");
         this.driver = driver;
     }
 
