@@ -49,6 +49,18 @@
             <artifactId>allure-junit5</artifactId>
             <version>2.13.6</version>
         </dependency>
+        <dependency>
+            <groupId>net.lightbody.bmp</groupId>
+            <artifactId>browsermob-core</artifactId>
+            <version>2.1.5</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>4.3.3</version>
+        </dependency>
     </dependencies>
 
 </project>
