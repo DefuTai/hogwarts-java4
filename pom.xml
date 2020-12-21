@@ -15,6 +15,7 @@
         <module>commons</module>
         <module>selenium</module>
         <module>appium</module>
+        <module>wiremock</module>
     </modules>
 
     <build>
