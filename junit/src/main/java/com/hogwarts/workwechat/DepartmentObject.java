@@ -67,4 +67,28 @@ public class DepartmentObject {
         return HttpRequest.post(url, map, ContentType.JSON);
     }
 
+    /**
+     * 删除部门
+     *
+     * @param accessToken 调用接口凭证
+     * @param id          部门id
+     * @return
+     */
+    public static Response deleteDepartment(String accessToken, String id) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/department/delete?access_token=" + accessToken + "&id=" + id;
+        return HttpRequest.get(url);
+    }
+
+    /**
+     * 获取部门列表
+     *
+     * @param accessToken 调用接口凭证
+     * @param id          部门id
+     * @return
+     */
+    public static Response listDepartment(String accessToken, String id) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=" + accessToken + "&id=" + id;
+        return HttpRequest.get(url);
+    }
+
 }

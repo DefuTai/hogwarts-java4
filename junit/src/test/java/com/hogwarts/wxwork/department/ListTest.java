@@ -1,12 +1,17 @@
 package com.hogwarts.wxwork.department;
 
+import com.alibaba.fastjson.JSONObject;
+import com.hogwarts.workwechat.DepartmentObject;
 import com.hogwarts.wxwork.BaseTest;
+import com.jayway.jsonpath.JsonPath;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
-import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * 描述：
+ * 描述：部门列表数据
  *
  * @Author defu
  * @Data 2020/12/21 2:07 上午
@@ -16,13 +21,16 @@ public class ListTest extends BaseTest {
 
     @Test
     void list_test() {
-        String id = "1";
-        given()
-                .when()
-                .get("https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=" + ACCESS_TOKEN + "&id=" + id)
-                .then()
-                .log().all()
-                .extract().response();
+        Response response = DepartmentObject.listDepartment(ACCESS_TOKEN, "1");
+        assertAll(
+                "部门列表数据校验",
+                () -> assertEquals("0", response.path("errcode").toString()),
+                () -> assertEquals("ok", response.path("errmsg").toString()),
+                () -> assertEquals("1", JsonPath.read(response.jsonPath().getList("department", JSONObject.class).get(0), "$.id").toString()),
+                () -> assertEquals("DF测试工厂", JsonPath.read(response.jsonPath().getList("department", JSONObject.class).get(0), "$.name").toString()),
+                () -> assertEquals("0", JsonPath.read(response.jsonPath().getList("department", JSONObject.class).get(0), "$.parentid").toString()),
+                () -> assertEquals("100000000", JsonPath.read(response.jsonPath().getList("department", JSONObject.class).get(0), "$.order").toString())
+        );
     }
 
 }
