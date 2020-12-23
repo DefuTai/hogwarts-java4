@@ -1,8 +1,7 @@
 package com.hogwarts.wxwork;
 
+import com.hogwarts.workwechat.TokenHelper;
 import org.junit.jupiter.api.BeforeAll;
-
-import static io.restassured.RestAssured.given;
 
 /**
  * 描述：
@@ -13,18 +12,29 @@ import static io.restassured.RestAssured.given;
  **/
 public class BaseTest {
 
+    /**
+     * 获取access_token是调用企业微信API接口的第一步，
+     * 相当于创建了一个登录凭证，其它的业务API接口，
+     * 都需要依赖于access_token来鉴权调用者身份。
+     * 因此开发者，在使用业务接口前，
+     * 要明确access_token的颁发来源，使用正确的access_token。
+     */
     public static String ACCESS_TOKEN;
 
+    /**
+     * 企业ID，获取方式参考：
+     * <a href="https://work.weixin.qq.com/api/doc/90000/90135/90665#corpid">术语说明-corpid</a>
+     */
     private static final String CORP_ID = "ww98102567c218bd46";
+    /**
+     * 应用的凭证密钥，获取方式参考：
+     * <a href="https://work.weixin.qq.com/api/doc/90000/90135/90665#secret">术语说明-secret</a>
+     */
     private static final String CORP_SECRET = "RFgsrXD-C5ibl4-YUTPvtuwXsQJ5bQjwH1DJxeRmCFk";
 
     @BeforeAll
     public static void beforeAll() {
-        ACCESS_TOKEN = given()
-                .params("corpid", CORP_ID, "corpsecret", CORP_SECRET)
-                .get("https://qyapi.weixin.qq.com/cgi-bin/gettoken")
-                .then()
-                .extract().response().path("access_token");
+        ACCESS_TOKEN = TokenHelper.getToken(CORP_ID, CORP_SECRET).path("access_token");
     }
 
 }
