@@ -1,13 +1,16 @@
 package com.hogwarts.wxwork;
 
+import com.hogwarts.workwechat.DepartmentObject;
 import com.hogwarts.workwechat.TokenHelper;
 import org.junit.jupiter.api.BeforeAll;
+
+import java.util.List;
 
 /**
  * 描述：
  *
  * @Author defu
- * @Data 2020-12-15 23:55
+ * @Date 2020-12-15 23:55
  * @Version 1.0
  **/
 public class BaseTest {
@@ -35,6 +38,18 @@ public class BaseTest {
     @BeforeAll
     public static void beforeAll() {
         ACCESS_TOKEN = TokenHelper.getToken(CORP_ID, CORP_SECRET).path("access_token");
+    }
+
+    /**
+     * 清理部门列表多余部门信息（id为1的根部门除外）
+     */
+    public void clearDepartmentTask() {
+        List<Integer> list = DepartmentObject.listDepartment(ACCESS_TOKEN, "").path("department.id");
+        for (int departmentId : list) {
+            if (departmentId != 1) {
+                DepartmentObject.deleteDepartment(ACCESS_TOKEN, String.valueOf(departmentId));
+            }
+        }
     }
 
 }

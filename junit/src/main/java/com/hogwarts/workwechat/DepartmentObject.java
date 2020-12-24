@@ -3,6 +3,7 @@ package com.hogwarts.workwechat;
 import com.hogwarts.utils.HttpRequest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.Map;
  * 描述：
  *
  * @Author defu
- * @Data 2020/12/21 2:59 上午
+ * @Date 2020/12/21 2:59 上午
  * @Version 1.0
  **/
 public class DepartmentObject {
@@ -30,7 +31,7 @@ public class DepartmentObject {
      * @param id          部门id
      * @return
      */
-    public static Response creatDepartment(String accessToken, String name, String enName, String parentId, String order, String id) {
+    public static Response createDepartment(String accessToken, String name, String enName, String parentId, String order, String id) {
         String url = "https://qyapi.weixin.qq.com/cgi-bin/department/create?access_token=" + accessToken;
 
         Map<String, Object> map = new HashMap<>();
@@ -41,6 +42,20 @@ public class DepartmentObject {
         map.put("id", id);
 
         return HttpRequest.post(url, map, ContentType.JSON);
+    }
+
+    /**
+     * 创建部门
+     * 快速创建，参数默认
+     *
+     * @param accessToken 调用接口凭证
+     * @return
+     */
+    public static String createDepartment(String accessToken) {
+        String name = "CREATE" + Thread.currentThread().getId() + currentThread;
+        Response response = createDepartment(accessToken, name, "", "1", "", "");
+        String departmentId = response.path("department.id");
+        return StringUtils.isNotEmpty(departmentId) ? departmentId : "";
     }
 
     /**
