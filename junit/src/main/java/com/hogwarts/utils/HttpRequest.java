@@ -34,6 +34,23 @@ public class HttpRequest {
     }
 
     /**
+     * @param url   请求地址
+     * @param param 参数
+     * @return
+     */
+    public static Response post(String url, String param) {
+        return given().log().all()
+                .contentType(ContentType.JSON)
+                .body(param)
+                .post(url)
+                .then()
+                .log()
+                .body()
+                .extract()
+                .response();
+    }
+
+    /**
      * @param url 请求地址
      * @return
      */
