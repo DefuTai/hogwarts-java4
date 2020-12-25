@@ -228,7 +228,7 @@ public class UserObject {
     }
 
     /**
-     * 删除用户
+     * 删除成员
      *
      * @param accessToken 调用接口凭证
      * @param userId      成员UserID。对应管理端的帐号
@@ -237,6 +237,22 @@ public class UserObject {
     public static Response deleteUser(String accessToken, String userId) {
         String url = "https://qyapi.weixin.qq.com/cgi-bin/user/delete?access_token=" + accessToken + "&userid=" + userId;
         return HttpRequest.get(url);
+    }
+
+    /**
+     * 批量删除成员
+     *
+     * @param accessToken 调用接口凭证
+     * @param userIdList  成员UserID列表。对应管理端的帐号。最多支持200个。若存在无效UserID，直接返回错误
+     * @return
+     */
+    public static Response batchDeleteUser(String accessToken, String[] userIdList) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/user/batchdelete?access_token=" + accessToken;
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("useridlist", userIdList);
+
+        return HttpRequest.post(url, map, ContentType.JSON);
     }
 
     /**
@@ -250,6 +266,47 @@ public class UserObject {
     public static Response simpleList(String accessToken, String departmentId, String fetchChild) {
         String url = "https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token=" + accessToken + "&department_id=" + departmentId + "&fetch_child=" + fetchChild;
         return HttpRequest.get(url);
+    }
+
+    /**
+     * 获取部门成员详情
+     *
+     * @param accessToken  调用接口凭证
+     * @param departmentId 获取的部门id
+     * @param fetchChild   1/0：是否递归获取子部门下面的成员
+     * @return
+     */
+    public static Response listUserByDepartment(String accessToken, String departmentId, String fetchChild) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/user/list?access_token=" + accessToken + "&department_id=" + departmentId + "&fetch_child=" + fetchChild;
+        return HttpRequest.get(url);
+    }
+
+    /**
+     * 获取加入企业二维码
+     *
+     * @param accessToken 调用接口凭证
+     * @param sizeType    qrcode尺寸类型，1: 171 x 171; 2: 399 x 399; 3: 741 x 741; 4: 2052 x 2052
+     * @return
+     */
+    public static Response getJoinQrCode(String accessToken, String sizeType) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/corp/get_join_qrcode?access_token=" + accessToken + "&size_type=" + sizeType;
+        return HttpRequest.get(url);
+    }
+
+    /**
+     * 获取企业活跃成员数
+     *
+     * @param accessToken 调用接口凭证
+     * @param date        具体某天的活跃人数，最长支持获取30天前数据
+     * @return
+     */
+    public static Response getActiveStat(String accessToken, String date) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/user/get_active_stat?access_token=" + accessToken;
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("date", date);
+
+        return HttpRequest.post(url, map, ContentType.JSON);
     }
 
 }

@@ -26,10 +26,10 @@ public class DeleteUserTest extends BaseTest {
         clearUserTask();
     }
 
-    @DisplayName("读取成员")
+    @DisplayName("删除成员")
     @Test
     void getUser() {
-        String userId = "GET" + Thread.currentThread().getId() + System.currentTimeMillis();
+        String userId = "DELETE" + Thread.currentThread().getId() + System.currentTimeMillis();
         String userName = userId;
         //初始化一个用户
         UserObject.createUser(ACCESS_TOKEN, userId, userName);
