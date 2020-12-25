@@ -2,6 +2,7 @@ package com.hogwarts.workwechat;
 
 import com.hogwarts.dto.UserDTO;
 import com.hogwarts.utils.HttpRequest;
+import com.hogwarts.utils.RandomUtil;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -105,6 +106,23 @@ public class UserObject {
         map.put("main_department", user.getMainDepartment());
 
         return HttpRequest.post(url, map, ContentType.JSON);
+    }
+
+    /**
+     * 创建成员
+     *
+     * @param accessToken 调用接口凭证。获取方法查看“<a href="https://work.weixin.qq.com/api/doc/10013#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E8%8E%B7%E5%8F%96access_token">获取access_token</a>”
+     * @param userId      成员UserID
+     * @param userName    成员名称。长度为1~64个utf8字符
+     */
+    public static void createUser(String accessToken, String userId, String userName) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(userId);
+        userDTO.setName(userName);
+        userDTO.setMobile("110" + RandomUtil.nextInt(8));
+        userDTO.setDepartment(new Integer[]{Integer.valueOf(1)});
+
+        createUser(accessToken, userDTO);
     }
 
     /**

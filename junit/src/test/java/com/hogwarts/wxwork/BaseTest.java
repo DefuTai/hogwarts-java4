@@ -24,6 +24,7 @@ public class BaseTest {
      * 要明确access_token的颁发来源，使用正确的access_token。
      */
     public static String ACCESS_TOKEN;
+    public static final String INITIAL_DEPARTMENT_ID = "1";
 
     /**
      * 企业ID，获取方式参考：
@@ -57,7 +58,7 @@ public class BaseTest {
      * 清理"DF测试工厂"部门下的所有测试成员（userId为TaiDeFu的成员除外）
      */
     public void clearUserTask() {
-        List<String> userIdList = UserObject.simpleList(ACCESS_TOKEN, "1", "0").path("userlist.userid");
+        List<String> userIdList = UserObject.simpleList(ACCESS_TOKEN, INITIAL_DEPARTMENT_ID, "0").path("userlist.userid");
         for (String userId : userIdList) {
             if (!"TaiDeFu".equals(userId)) {
                 UserObject.deleteUser(ACCESS_TOKEN, userId);

@@ -1,0 +1,4 @@
+id,description,name,address,externalPosition,errCode
+1,正常流-修改成员信息,CREATE,杭州市西湖区西溪首座,测试工程师,0
+2,正常流-成员名称包含特殊字符,~！@#￥%……&*（）——,杭州市西湖区西溪首座,测试工程师,0
+3,异常流-成员名称超过64个字符,sldkjfqoiwqlkjsjflksjskldfjlajdksldkjfqoiwqlkjsjflksjskldfjlajdk,,,40058
