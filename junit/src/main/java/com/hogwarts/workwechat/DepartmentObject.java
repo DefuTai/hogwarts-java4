@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 描述：
+ * 描述：部门接口对象
  *
  * @Author defu
  * @Date 2020/12/21 2:59 上午
@@ -52,9 +52,9 @@ public class DepartmentObject {
      * @return
      */
     public static String createDepartment(String accessToken) {
-        String name = "CREATE" + Thread.currentThread().getId() + currentThread;
-        Response response = createDepartment(accessToken, name, "", "1", "", "");
-        String departmentId = response.path("department.id");
+        String name = "CREATE" + currentThread + timestamp;
+        Response response = createDepartment(accessToken, name, null, "1", null, null);
+        String departmentId = response.path("id") == null ? null : response.path("id").toString();
         return StringUtils.isNotEmpty(departmentId) ? departmentId : "";
     }
 

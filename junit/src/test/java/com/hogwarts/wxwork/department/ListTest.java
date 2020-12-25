@@ -5,6 +5,9 @@ import com.hogwarts.workwechat.DepartmentObject;
 import com.hogwarts.wxwork.BaseTest;
 import com.jayway.jsonpath.JsonPath;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -19,8 +22,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  **/
 public class ListTest extends BaseTest {
 
+    @BeforeEach
+    @AfterEach
+    void each() {
+        clearDepartmentTask();
+    }
+
+    @DisplayName("部门列表")
     @Test
-    void list_test() {
+    void listTest() {
         Response response = DepartmentObject.listDepartment(ACCESS_TOKEN, "1");
         assertAll(
                 "部门列表数据校验",

@@ -3,6 +3,9 @@ package com.hogwarts.wxwork.department;
 import com.hogwarts.workwechat.DepartmentObject;
 import com.hogwarts.wxwork.BaseTest;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
@@ -17,8 +20,15 @@ import static org.junit.jupiter.api.Assertions.*;
  **/
 public class CreateTest extends BaseTest {
 
+    @BeforeEach
+    @AfterEach
+    void each() {
+        clearDepartmentTask();
+    }
+
+    @DisplayName("创建部门")
     @ParameterizedTest
-    @CsvFileSource(resources = "/data/CreateTestData.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/data/department/CreateTestData.csv", numLinesToSkip = 1)
     void create_test(String name, String enName, String parentId, String order, String id) {
         name = name + Thread.currentThread().getId() + System.currentTimeMillis();
         Response response = DepartmentObject.createDepartment(ACCESS_TOKEN, name, enName, parentId, order, id);

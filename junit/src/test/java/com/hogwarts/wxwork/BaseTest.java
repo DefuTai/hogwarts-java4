@@ -2,6 +2,7 @@ package com.hogwarts.wxwork;
 
 import com.hogwarts.workwechat.DepartmentObject;
 import com.hogwarts.workwechat.TokenHelper;
+import com.hogwarts.workwechat.UserObject;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.List;
@@ -48,6 +49,18 @@ public class BaseTest {
         for (int departmentId : list) {
             if (departmentId != 1) {
                 DepartmentObject.deleteDepartment(ACCESS_TOKEN, String.valueOf(departmentId));
+            }
+        }
+    }
+
+    /**
+     * 清理"DF测试工厂"部门下的所有测试成员（userId为TaiDeFu的成员除外）
+     */
+    public void clearUserTask() {
+        List<String> userIdList = UserObject.simpleList(ACCESS_TOKEN, "1", "0").path("userlist.userid");
+        for (String userId : userIdList) {
+            if (!"TaiDeFu".equals(userId)) {
+                UserObject.deleteUser(ACCESS_TOKEN, userId);
             }
         }
     }

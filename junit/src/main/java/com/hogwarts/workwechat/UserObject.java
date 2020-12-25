@@ -221,4 +221,17 @@ public class UserObject {
         return HttpRequest.get(url);
     }
 
+    /**
+     * 获取部门成员
+     *
+     * @param accessToken  调用接口凭证
+     * @param departmentId 获取的部门id
+     * @param fetchChild   是否递归获取子部门下面的成员：1-递归获取，0-只获取本部门
+     * @return
+     */
+    public static Response simpleList(String accessToken, String departmentId, String fetchChild) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token=" + accessToken + "&department_id=" + departmentId + "&fetch_child=" + fetchChild;
+        return HttpRequest.get(url);
+    }
+
 }
