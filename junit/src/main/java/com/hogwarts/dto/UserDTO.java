@@ -1,7 +1,5 @@
 package com.hogwarts.dto;
 
-import lombok.Data;
-
 /**
  * 描述：用户业务对象
  *
@@ -9,7 +7,6 @@ import lombok.Data;
  * @Time 2020/12/23 8:25 下午
  * @Version 1.0
  **/
-@Data
 public class UserDTO {
 
     /**
@@ -89,4 +86,155 @@ public class UserDTO {
      */
     private ExternalProfileDTO externalProfile;
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public Integer[] getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Integer[] department) {
+        this.department = department;
+    }
+
+    public Integer[] getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer[] order) {
+        this.order = order;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getIsLeaderInDept() {
+        return isLeaderInDept;
+    }
+
+    public void setIsLeaderInDept(String isLeaderInDept) {
+        this.isLeaderInDept = isLeaderInDept;
+    }
+
+    public String getEnable() {
+        return enable;
+    }
+
+    public void setEnable(String enable) {
+        this.enable = enable;
+    }
+
+    public String getAvatarMediaId() {
+        return avatarMediaId;
+    }
+
+    public void setAvatarMediaId(String avatarMediaId) {
+        this.avatarMediaId = avatarMediaId;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getMainDepartment() {
+        return mainDepartment;
+    }
+
+    public void setMainDepartment(Integer mainDepartment) {
+        this.mainDepartment = mainDepartment;
+    }
+
+    public ExtAttrDTO getExtAttr() {
+        return extAttr;
+    }
+
+    public void setExtAttr(ExtAttrDTO extAttr) {
+        this.extAttr = extAttr;
+    }
+
+    public Boolean getToInvite() {
+        return toInvite;
+    }
+
+    public void setToInvite(Boolean toInvite) {
+        this.toInvite = toInvite;
+    }
+
+    public String getExternalPosition() {
+        return externalPosition;
+    }
+
+    public void setExternalPosition(String externalPosition) {
+        this.externalPosition = externalPosition;
+    }
+
+    public ExternalProfileDTO getExternalProfile() {
+        return externalProfile;
+    }
+
+    public void setExternalProfile(ExternalProfileDTO externalProfile) {
+        this.externalProfile = externalProfile;
+    }
 }
