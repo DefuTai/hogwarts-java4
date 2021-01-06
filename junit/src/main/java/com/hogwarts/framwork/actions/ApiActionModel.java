@@ -97,7 +97,7 @@ public class ApiActionModel {
          * 2. 请求参数、URL中全局变量替换
          * PS：这里需要编写占位符工具类PlaceholderUtils
          */
-        if (!query.isEmpty()) {
+        if (query != null) {
             finalQuery.putAll(PlaceholderUtils.resolveMap(query, GlobalVariables.getGlobalVariables()));
         }
         //body全局变量替换
@@ -115,7 +115,7 @@ public class ApiActionModel {
         /**
          * 4. 请求、URL中的内部变量进行一个替换
          */
-        if (!query.isEmpty()) {
+        if (query != null) {
             finalQuery.putAll(PlaceholderUtils.resolveMap(query, actionVariables));
         }
         runBody = PlaceholderUtils.resolveString(body, actionVariables);
@@ -128,7 +128,7 @@ public class ApiActionModel {
         if (StringUtils.isNotEmpty(contentType)) {
             requestSpecification.contentType(contentType);
         }
-        if (!headers.isEmpty()) {
+        if (headers != null) {
             requestSpecification.headers(headers);
         }
         if (finalQuery != null && finalQuery.size() > 0) {
